@@ -30,10 +30,10 @@ public class DepartmentServiceImpl implements DepartmentsService{
     }
 
     @Override
-    public Collection<Employee> findAllEmployeesByDepartment(Integer department) {  //поиск всех сотрудников из одного отдела
+    public Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department) {  //поиск всех сотрудников из одного отдела
         return employeeService.findAll()
                 .stream().filter(employee -> employee.getDepartment().equals(department))
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements DepartmentsService{
     }
 
     @Override
-    public Map<Integer, List<Employee>> ListAllEmployeeInDepartment() { //
+    public Map<Integer, List<Employee>> listAllEmployeeByDepartment() { //
         return employeeService.findAll().
                 stream().collect(Collectors.groupingBy(Employee::getDepartment));
     }

@@ -9,11 +9,11 @@ public interface DepartmentsService {
 
     Optional<Employee> findMaxSalaryInDepartment(Integer department);
 
-    Collection<Employee> findAllEmployeesByDepartment(Integer department);
+    Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department);
 
     Integer countSumSalaryInDepartment(Integer department);
 
     OptionalDouble findAverageSumSalaryEmployeesDepartment(Integer department);
 
-    Map<Integer, List<Employee>> ListAllEmployeeInDepartment();
+    Map<Integer, List<Employee>> listAllEmployeeByDepartment();
 }
