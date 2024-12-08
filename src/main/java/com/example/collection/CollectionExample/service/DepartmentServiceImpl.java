@@ -16,28 +16,28 @@ public class DepartmentServiceImpl implements DepartmentsService{
 
 
     @Override
-    public Optional<Employee> findMinSalaryInDepartment(Integer department) {        //метод поиска минимальной зп в определенном отделе
+    public Optional<Employee> findMinSalaryInDepartment(Integer department) {
         return employeeService.findAll()
                 .stream().filter(e -> e.getDepartment().equals(department)).
                 min(Comparator.comparingInt(Employee::getSalary));
     }
 
     @Override
-    public Optional<Employee> findMaxSalaryInDepartment(Integer department) {        //метод поиска max зп в определенном отделе
+    public Optional<Employee> findMaxSalaryInDepartment(Integer department) {
         return employeeService.findAll()
                 .stream().filter(e -> e.getDepartment().equals(department)).
                 max(Comparator.comparingInt(Employee::getSalary));
     }
 
     @Override
-    public Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department) {  //поиск всех сотрудников из одного отдела
+    public Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department) {
         return employeeService.findAll()
                 .stream().filter(employee -> employee.getDepartment().equals(department))
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 
     @Override
-    public Integer countSumSalaryInDepartment(Integer department) {     //Метод подсчета суммы затрат на зарплаты работникам в отделе
+    public Integer countSumSalaryInDepartment(Integer department) {
         return employeeService.findAll()
                 .stream().filter(employee -> employee.getDepartment().equals(department))
                 .toList().stream().mapToInt(Employee::getSalary).sum();
@@ -45,14 +45,14 @@ public class DepartmentServiceImpl implements DepartmentsService{
     }
 
     @Override
-    public OptionalDouble findAverageSumSalaryEmployeesDepartment(Integer department) {     //средняя зп работников в отделе
+    public OptionalDouble findAverageSumSalaryEmployeesDepartment(Integer department) {
         return employeeService.findAll()
                 .stream().filter(employee -> employee.getDepartment().equals(department))
                 .toList().stream().mapToInt(Employee::getSalary).average();
     }
 
     @Override
-    public Map<Integer, List<Employee>> listAllEmployeeByDepartment() { //
+    public Map<Integer, List<Employee>> listAllEmployeeByDepartment() {
         return employeeService.findAll().
                 stream().collect(Collectors.groupingBy(Employee::getDepartment));
     }

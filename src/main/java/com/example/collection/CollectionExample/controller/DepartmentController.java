@@ -19,7 +19,6 @@ public class DepartmentController {
         this.departmentsService = departmentsService;
     }
 
-
     @GetMapping(path = "/find-min")
     public Optional<Employee> findEmployeeWithMinSalaryInDepartment(@RequestParam Integer department) {
         return departmentsService.findMinSalaryInDepartment(department);
@@ -29,11 +28,6 @@ public class DepartmentController {
     public Optional<Employee> findEmployeeWithMaxSalaryInDepartment(@RequestParam Integer department) {
         return departmentsService.findMaxSalaryInDepartment(department);
     }
-
-/*    @GetMapping(path = "/find-in-dep")
-    public Collection<Employee> findAllInDepartment(@RequestParam Integer department) {
-        return departmentsService.findAllEmployeesByDepartment(department);
-    }*/
 
     @GetMapping(path = "/count-sum")
     public Integer countSumSalaryInDepartment(@RequestParam Integer department) {
@@ -46,7 +40,7 @@ public class DepartmentController {
     }
 
     @GetMapping(path = "/all")
-    public Map<Integer, List<Employee>> listAllEmployeeByDepartment(@RequestParam (required = false) Integer department){
+    public Map<Integer, List<Employee>> listAllEmployeeByDepartment(@RequestParam(required = false) Integer department) {
         if (department == null) {
             return departmentsService.listAllEmployeeByDepartment();
         }
