@@ -5,15 +5,16 @@ import com.example.collection.CollectionExample.model.Employee;
 import java.util.*;
 
 public interface DepartmentsService {
-    Optional<Employee> findMinSalaryInDepartment(Integer department);
+    Integer findMinSalaryInDepartment(Integer department);
 
-    Optional<Employee> findMaxSalaryInDepartment(Integer department);
+    Integer findMaxSalaryInDepartment(Integer department);
 
-    Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department);
+    List<Employee> findAllEmployeesByDepartment(Integer department);
 
     Integer countSumSalaryInDepartment(Integer department);
 
-    OptionalDouble findAverageSumSalaryEmployeesDepartment(Integer department);
+    Double findAverageSumSalaryEmployeesDepartment(Integer department);
 
-    Map<Integer, List<Employee>> listAllEmployeeByDepartment();
+    Map<Integer, List<Employee>> listAllEmployeeGroupingByDepartment();
+
 }

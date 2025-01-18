@@ -1,5 +1,6 @@
 package com.example.collection.CollectionExample.service;
 
+import com.example.collection.CollectionExample.exception.EmployeeNotFoundException;
 import com.example.collection.CollectionExample.model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +17,29 @@ public class DepartmentServiceImpl implements DepartmentsService{
 
 
     @Override
-    public Optional<Employee> findMinSalaryInDepartment(Integer department) {
+    public Integer findMinSalaryInDepartment(Integer department) {
         return employeeService.findAll()
-                .stream().filter(e -> e.getDepartment().equals(department)).
-                min(Comparator.comparingInt(Employee::getSalary));
+                .stream()
+                .filter(e -> e.getDepartment().equals(department))
+                .mapToInt(Employee::getSalary)
+                .min().orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Optional<Employee> findMaxSalaryInDepartment(Integer department) {
+    public Integer findMaxSalaryInDepartment(Integer department) {
         return employeeService.findAll()
-                .stream().filter(e -> e.getDepartment().equals(department)).
-                max(Comparator.comparingInt(Employee::getSalary));
+                .stream().filter(e -> e.getDepartment().equals(department))
+                .mapToInt(Employee::getSalary)
+                .max()
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Map<Integer, List<Employee>> findAllEmployeesByDepartment(Integer department) {
+    public List<Employee> findAllEmployeesByDepartment(Integer department) {
         return employeeService.findAll()
-                .stream().filter(employee -> employee.getDepartment().equals(department))
-                .collect(Collectors.groupingBy(Employee::getDepartment));
+                .stream()
+                .filter(employee -> employee.getDepartment().equals(department))
+                .toList();
     }
 
     @Override
@@ -41,19 +47,25 @@ public class DepartmentServiceImpl implements DepartmentsService{
         return employeeService.findAll()
                 .stream().filter(employee -> employee.getDepartment().equals(department))
                 .toList().stream().mapToInt(Employee::getSalary).sum();
-
     }
 
     @Override
-    public OptionalDouble findAverageSumSalaryEmployeesDepartment(Integer department) {
+    public Double findAverageSumSalaryEmployeesDepartment(Integer department) {
         return employeeService.findAll()
-                .stream().filter(employee -> employee.getDepartment().equals(department))
-                .toList().stream().mapToInt(Employee::getSalary).average();
+                .stream()
+                .filter(employee -> employee.getDepartment().equals(department))
+                .toList()
+                .stream()
+                .mapToInt(Employee::getSalary)
+                .average()
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     @Override
-    public Map<Integer, List<Employee>> listAllEmployeeByDepartment() {
-        return employeeService.findAll().
-                stream().collect(Collectors.groupingBy(Employee::getDepartment));
+    public Map<Integer, List<Employee>> listAllEmployeeGroupingByDepartment() {
+        return employeeService.findAll()
+                        .stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
+
 }

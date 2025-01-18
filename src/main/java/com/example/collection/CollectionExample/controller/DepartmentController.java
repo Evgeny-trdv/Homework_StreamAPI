@@ -2,10 +2,7 @@ package com.example.collection.CollectionExample.controller;
 
 import com.example.collection.CollectionExample.model.Employee;
 import com.example.collection.CollectionExample.service.DepartmentsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -19,32 +16,29 @@ public class DepartmentController {
         this.departmentsService = departmentsService;
     }
 
-    @GetMapping(path = "/find-min")
-    public Optional<Employee> findEmployeeWithMinSalaryInDepartment(@RequestParam Integer department) {
-        return departmentsService.findMinSalaryInDepartment(department);
+    @GetMapping(path = "/{id}/employee/min")
+    public Integer findEmployeeWithMinSalaryInDepartment(@PathVariable Integer id) {
+        return departmentsService.findMinSalaryInDepartment(id);
     }
 
-    @GetMapping(path = "/find-max")
-    public Optional<Employee> findEmployeeWithMaxSalaryInDepartment(@RequestParam Integer department) {
-        return departmentsService.findMaxSalaryInDepartment(department);
+    @GetMapping(path = "/{id}/employee/max")
+    public Integer findEmployeeWithMaxSalaryInDepartment(@PathVariable Integer id) {
+        return departmentsService.findMaxSalaryInDepartment(id);
     }
 
-    @GetMapping(path = "/count-sum")
-    public Integer countSumSalaryInDepartment(@RequestParam Integer department) {
-        return departmentsService.countSumSalaryInDepartment(department);
+    @GetMapping(path = "/{id}/employee/sum")
+    public Integer countSumSalaryInDepartment(@RequestParam Integer id) {
+        return departmentsService.countSumSalaryInDepartment(id);
     }
 
     @GetMapping(path = "/average")
-    public OptionalDouble findAverageSumSalaryEmployeesDepartment(@RequestParam Integer department) {
+    public Double findAverageSumSalaryEmployeesDepartment(@RequestParam Integer department) {
         return departmentsService.findAverageSumSalaryEmployeesDepartment(department);
     }
 
-    @GetMapping(path = "/all")
-    public Map<Integer, List<Employee>> listAllEmployeeByDepartment(@RequestParam(required = false) Integer department) {
-        if (department == null) {
-            return departmentsService.listAllEmployeeByDepartment();
-        }
-        return departmentsService.findAllEmployeesByDepartment(department);
+    @GetMapping(path = "/employees")
+    public Map<Integer, List<Employee>> listAllEmployeeGroupingByDepartment() {
+        return departmentsService.listAllEmployeeGroupingByDepartment();
     }
 }
 
